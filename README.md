@@ -3,7 +3,7 @@
 
   
   ## Description 
-  A lightweight, easy to use administration lua script for Roblox.
+  TuxHurt is the project that aims to run Sirhurt on GNU/Linux with 0 effort.
 
   ## Table of Contents
   * [Installation](#installation)
