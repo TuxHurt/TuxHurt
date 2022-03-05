@@ -16,10 +16,10 @@
   * [Creators](#creators)
   
   ## Installation 
-  Clone the repository with `git clone https://github.com/TuxHut/TuxHurt`
-  Install the requirements with `pip3 -r requirements.txt`
-  Download Sirhurt from the website and put the .zip archive next to run and setup scripts(The archive must be named "SirHurt V4.zip").
-  Run the run.py script. This may take a while for the first time.
+  Clone the repository with `git clone https://github.com/TuxHut/TuxHurt`<br/>
+  Install the requirements with `pip3 -r requirements.txt`<br/>
+  Download Sirhurt from the website and put the .zip archive next to run and setup scripts(The archive must be named "SirHurt V4.zip").<br/>
+  Run the run.py script. This may take a while for the first time.<br/>
 
   ## Usage 
   You can simply use the `run.py` to run Sirhurt. It will automatically check updates for you too.<br/>
