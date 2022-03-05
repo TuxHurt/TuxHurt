@@ -17,7 +17,7 @@
   
   ## Installation 
   Clone the repository with `git clone https://github.com/TuxHut/TuxHurt`<br/>
-  Install the requirements with `pip3 -r requirements.txt`<br/>
+  Install the requirements with `pip3 install -r requirements.txt`<br/>
   Download Sirhurt from the website and put the .zip archive next to run and setup scripts(The archive must be named "SirHurt V4.zip").<br/>
   Run the run.py script. This may take a while for the first time.<br/>
 
