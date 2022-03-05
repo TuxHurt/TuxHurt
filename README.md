@@ -8,6 +8,7 @@
   ## Table of Contents
   * [Installation](#installation)
   * [Usage](#usage)
+  * [Injector](#injector)
   * [License](#license)
   * [Questions](#questions)
   * [Requirements](#requirements)
@@ -17,6 +18,9 @@
 
   ## Usage 
   Useage goes here
+  
+  ## Injector 
+  TuxHurt uses an Injector called TuxHut that is made by the Owners of TuxHurt. It is a big part of TuxHurt's 0 effort goal. Read more about the Injector here:          https://github.com/TuxHut/TuxHut
 
   ## License 
   This project is licensed under GNU GPLv3
