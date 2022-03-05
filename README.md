@@ -9,7 +9,7 @@
   * [Installation](#installation)
   * [Usage](#usage)
   * [Injector](#injector)
-  * [How to run SirHurt on GNU/Linux without TuxHurt](#How to run SirHurt on GNU/Linux without TuxHurt)
+  * [How to run SirHurt on GNU/Linux without TuxHurt](#SirHurtWine)
   * [License](#license)
   * [Questions](#questions)
   * [Requirements](#requirements)
@@ -30,7 +30,7 @@
   ## Injector 
   TuxHurt uses an Injector called TuxHut that is made by the Owners of TuxHurt. It is a big part of TuxHurt's 0 effort goal. Read more about the Injector here:       https://github.com/TuxHut/TuxHut
   
-  ## How to run SirHurt on GNU/Linux without TuxHurt
+  ## SirHurtWine
   If you would like to run SirHurt on GNU/Linux without TuxHurt, read a guide created by use [here](https://hentai.dsf001.site/notes/sirhurt.html).
   It's recommended to run SirHurt on GNU/Linux with TuxHurt.
 
