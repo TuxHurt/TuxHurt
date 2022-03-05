@@ -3,10 +3,10 @@
 
   
   ## Description 
-  TuxHurt is the project that aims to run Sirhurt on GNU/Linux with 0 effort.
   <a href="https://github.com/orgs/TuxHurt/TuxHurt/main/">
     <img src="readmeassets/TuxHurtLogo.png" alt="Logo" width="160" height="120">
   </a>
+  TuxHurt is the project that aims to run Sirhurt on GNU/Linux with 0 effort.
 
   ## Table of Contents
   * [Installation](#installation)
