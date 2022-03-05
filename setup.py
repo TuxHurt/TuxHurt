@@ -83,6 +83,14 @@ def setupEnvironment():
     subprocess.call(["env", f"WINEPREFIX={os.getcwd()}/prefix", f"{winepath}/wine", "wineboot"],
                     stdout=subprocess.DEVNULL,
                     stderr=subprocess.DEVNULL)
+
+    # Kill the wineserver to avoid conflicts
+    print(Fore.YELLOW + "Killing the wineserver..." + Style.RESET_ALL)
+    subprocess.Popen(["env", f"WINEPREFIX={os.getcwd()}/prefix", f"{winepath+'/wineserver'}", "-k"],
+                     stdout=subprocess.DEVNULL,
+                     stderr=subprocess.DEVNULL)
+
+    print(Fore.GREEN + "Installing redist..." + Style.RESET_ALL)
     subprocess.call(["env", f"WINEPREFIX={os.getcwd()}/prefix", "winetricks", "vcrun2015"],
                     stdout=subprocess.DEVNULL,
                     stderr=subprocess.DEVNULL)
