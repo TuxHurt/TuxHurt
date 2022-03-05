@@ -1,8 +1,6 @@
 import os
 import configparser
 import subprocess
-import sysconfig
-
 from colorama import Fore, Style
 import requests
 
@@ -52,10 +50,9 @@ def setupEnvironment():
     # Download the injector
     print(Fore.GREEN + "Downloading the files..." + Style.RESET_ALL)
     os.chdir("sirhurt")
-    os.system("wget https://github.com/TuxHut/TuxHut/blob/main/TuxHutInjector.exe?raw=true -q  > /dev/null 2>&1")
-    # Download Sirhurt
-    #os.system("wget http://localhost/SirHurt%20V4.zip -q  > /dev/null 2>&1")
+    os.system("wget -O TuxHutInjector.exe https://github.com/TuxHut/TuxHut/blob/main/TuxHutInjector.exe?raw=true -q  > /dev/null 2>&1")
 
+    # Check if Sirhurt V4.zip is here
     if not os.path.exists("../SirHurt V4.zip"):
         if not os.path.exists("SirHurt V4.zip"):
             print(Fore.RED + "Sirhurt not found! Due to some problems with getting links and Sirhurt's TOS, "
@@ -66,11 +63,12 @@ def setupEnvironment():
     else:
         os.system("mv '../SirHurt V4.zip' 'SirHurt V4.zip'")
 
+    # Unzip Sirhurt
     os.system("unzip 'SirHurt V4.zip' > /dev/null 2>&1")
-    config = configparser.ConfigParser()
     # Open TuxHurtConfig.ini
+    config = configparser.ConfigParser()
     config.read("TuxHurtConfig.ini")
-    # write the "filepath" to the config file
+    # write the necessary values to TuxHurtConfig.ini
     config.set("DEFAULT", "winepath", winepath)
     config.set("DEFAULT", "sirhurtpath", os.getcwd())
     config.set("DEFAULT", "grapejuiceprefix", grapejuicePrefixPath)
@@ -132,6 +130,8 @@ def removeSirhurt():
 
 
 def fixClient():
+    # The Roblox client fix is easy, simply delete that file.
+    os.chdir("sirhurt")
     print(Fore.YELLOW + "Fixing the Roblox client..." + Style.RESET_ALL)
     config = configparser.ConfigParser()
     config.read("TuxHurtConfig.ini")
@@ -143,11 +143,13 @@ def fixClient():
     except:
         print(Fore.RED + "Could not remove the GlobalBasicSettings_13.xml file!" + Style.RESET_ALL)
 
+
 def checkUpdates():
     print(Fore.YELLOW + "Checking for updates..." + Style.RESET_ALL)
     config = configparser.ConfigParser()
     config.read("TuxHurtConfig.ini")
     currentVersion = config.get("DEFAULT", "currentversion")
+    # Get the latest version and compare them
     latestVersion = requests.get("https://sirhurt.net/asshurt/update/v4/fetch_sirhurt_version.php").text
     if currentVersion != latestVersion:
         question = input(Fore.YELLOW + "A Sirhurt update is detected. Do you want to perform an update? [Y/n]: " + Style.RESET_ALL).lower()
@@ -157,3 +159,7 @@ def checkUpdates():
             return False
         else:
             updateSirhurt()
+
+if __name__ == "__main__":
+    print(Fore.RED + "This script is not meant to run from the command line! Please run 'run.py' instead." + Style.RESET_ALL)
+    exit()
