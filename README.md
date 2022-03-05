@@ -6,14 +6,22 @@
   TuxHurt is the project that aims to run Sirhurt on GNU/Linux with 0 effort.
 
   ## Table of Contents
+  * [Requirements](#requirements)
   * [Installation](#installation)
   * [Usage](#usage)
   * [Injector](#injector)
   * [How to run SirHurt on GNU/Linux without TuxHurt](#SirHurtWine)
   * [License](#license)
   * [Questions](#questions)
-  * [Requirements](#requirements)
   * [Creators](#creators)
+    
+  ## Requirements
+  Apart from the requirements.txt, this script makes heavy use of UNIX commands. Here are what you need:
+  * wget
+  * unzip
+  * winetricks
+  
+  (If you're using a beginner distro like Ubuntu, there's a high chance you already have those)
   
   ## Installation 
   Clone the repository with `git clone https://github.com/TuxHut/TuxHurt`<br/>
@@ -40,15 +48,7 @@
 
   ## Questions
   If you have any questions about this project, please contact us directly on [Discord](https://discord.gg/b8PGgMHpYX).
-  
-  ## Requirements
-  Apart from the requirements.txt, this script makes heavy use of UNIX commands. Here are what you need:
-  * wget
-  * unzip
-  * winetricks
-  
-  (If you're using a beginner distro like Ubuntu, there's a high chance you already have those)
-  
+
   ## Creators
   * Emilia(Python scripts, Wine research)
   * Cy#0730(Injector, Designs)
