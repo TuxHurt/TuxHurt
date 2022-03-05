@@ -1,7 +1,7 @@
-# TuxHurt
-  <a href="https://github.com/orgs/TuxHurt/TuxHurt/main/">
+<a href="https://github.com/orgs/TuxHurt/TuxHurt/main/">
     <img src="readmeassets/TuxHurtLogo.png" alt="Logo" width="160" height="120">
-  </a>
+</a>
+# TuxHurt
   ![Github licence](https://upload.wikimedia.org/wikipedia/commons/9/93/GPLv3_Logo.svg)
 
   
