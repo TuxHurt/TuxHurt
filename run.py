@@ -62,13 +62,21 @@ def runSirhurt():
 
     # Check for the attach output
     while True:
-        realtime_output = sirhurt_process.stdout.readline()
-        if realtime_output == '' and sirhurt_process.poll() is not None:
-            break
-        if realtime_output:
-            if 'Attempting to attach' in realtime_output.strip().decode("utf-8"):
-                injectSirhurt()
-                sleep(1)
+        try:
+            realtime_output = sirhurt_process.stdout.readline()
+            if realtime_output == '' and sirhurt_process.poll() is not None:
+                break
+            if realtime_output:
+                if 'Attempting to attach' in realtime_output.strip().decode("utf-8"):
+                    injectSirhurt()
+                    sleep(1)
+        except KeyboardInterrupt:
+            print(Fore.YELLOW + "Killing wineserver to exit Sirhurt..." + Style.RESET_ALL)
+            subprocess.Popen(["env", f"WINEPREFIX={sirhurtPrefixPath}", f"{winePath + '/wineserver'}", "-k"],
+                             stdout=subprocess.DEVNULL,
+                             stderr=subprocess.DEVNULL)
+            print(Fore.GREEN + "Wineserver killed successfully! Thank you for using TuxHurt." + Style.RESET_ALL)
+            exit()
 
 
 if __name__ == "__main__":
