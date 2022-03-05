@@ -48,6 +48,6 @@
   * Cy#0730(Injector, Designs)
 
 <a href="https://github.com/orgs/TuxHurt/TuxHurt/main/">
-    <img src="readmeassets/TuxHurtLogo.png" alt="Logo" width="160" height="140">
+    <img src="readmeassets/TuxHurtLogo.png" alt="Logo" width="160" height="160">
 </a>
   
