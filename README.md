@@ -4,6 +4,9 @@
   
   ## Description 
   TuxHurt is the project that aims to run Sirhurt on GNU/Linux with 0 effort.
+  
+  ### DISCLAIMER!
+  TuxHurt is not a cracked version of SirHurt v4, you must have SirHurt v4 to use TuxHurt
 
   ## Table of Contents
   * [Requirements](#requirements)
