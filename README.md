@@ -22,7 +22,7 @@
   * unzip
   * winetricks
   
-  (If you're using a beginner distro like Ubuntu, there's a high chance you already have those)
+  (If you're using a beginner distro like Ubuntu, there's a high chance you already have those, except a SirHurt License of course.)
   
   ## Installation 
   Clone the repository with `git clone https://github.com/TuxHut/TuxHurt`<br/>
