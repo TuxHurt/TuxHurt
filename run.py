@@ -108,7 +108,6 @@ def runSirhurt():
 
                 if "RBX" in output:
                     enableChecks = True
-                    print(output)
                     lastOutputTime = time.time()
 
             if enableChecks:
