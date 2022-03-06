@@ -1,6 +1,7 @@
 # TuxHurt
-  ![Github licence](https://upload.wikimedia.org/wikipedia/commons/9/93/GPLv3_Logo.svg)
-
+  ![Github licence](https://img.shields.io/badge/license-GPLv3-green?style=flat-square)
+  ![Platform](https://img.shields.io/badge/platform-GNU%2FLinux-green?style=flat-square)
+  [![Discord](https://img.shields.io/badge/Discord-TuxHurt-blue?style=flat-square)](https://discord.gg/b8PGgMHpYX)
   
   ## Description 
   TuxHurt is the project that aims to run Sirhurt on GNU/Linux with 0 effort.
