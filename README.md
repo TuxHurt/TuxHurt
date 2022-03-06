@@ -17,6 +17,7 @@
     
   ## Requirements
   Apart from the requirements.txt, this script makes heavy use of UNIX commands. Here are what you need:
+  * A Valid SirHurt License
   * wget
   * unzip
   * winetricks
