@@ -11,7 +11,7 @@ def getUser():
     return user
 
 
-def setupEnvironment():
+def setupEnvironment(verbose=False):
     grapejuicePrefixPath = ""
     winepath = ""
     user = getUser()
@@ -46,11 +46,16 @@ def setupEnvironment():
     except:
         print("There was an error with File System!")
         exit()
-    # Links here will be changed later
+
     # Download the injector
     print(Fore.GREEN + "Downloading the files..." + Style.RESET_ALL)
     os.chdir("sirhurt")
-    os.system("wget -O TuxHutInjector.exe https://github.com/TuxHut/TuxHut/blob/main/TuxHutInjector.exe?raw=true -q  > /dev/null 2>&1")
+    if verbose:
+        os.system("wget -O TuxHutInjector.exe https://github.com/TuxHut/TuxHut/blob/main/TuxHutInjector.exe?raw=true")
+    else:
+        os.system(
+            "wget -O TuxHutInjector.exe https://github.com/TuxHut/TuxHut/blob/main/TuxHutInjector.exe?raw=true -q  > "
+            "/dev/null 2>&1")
 
     # Check if Sirhurt V4.zip is here
     if not os.path.exists("../SirHurt V4.zip"):
@@ -60,14 +65,17 @@ def setupEnvironment():
             os.chdir("..")
             os.system("rm -rf sirhurt")
             exit()
-    else:
-        os.system("mv '../SirHurt V4.zip' 'SirHurt V4.zip'")
 
     # Unzip Sirhurt
-    os.system("unzip 'SirHurt V4.zip' > /dev/null 2>&1")
+    if verbose:
+        os.system("unzip '../SirHurt V4.zip' -d ../sirhurt")
+    else:
+        os.system("unzip '../SirHurt V4.zip' -d ../sirhurt > /dev/null 2>&1")
+
     # Open TuxHurtConfig.ini
     config = configparser.ConfigParser()
     config.read("TuxHurtConfig.ini")
+
     # write the necessary values to TuxHurtConfig.ini
     config.set("DEFAULT", "winepath", winepath)
     config.set("DEFAULT", "sirhurtpath", os.getcwd())
@@ -80,29 +88,40 @@ def setupEnvironment():
 
     print(Fore.YELLOW + "Creating the prefix now. Please wait a while..." + Style.RESET_ALL)
     # Run wine with environment variable WINEPREFIX
-    subprocess.call(["env", f"WINEPREFIX={os.getcwd()}/prefix", f"{winepath}/wine", "wineboot"],
-                    stdout=subprocess.DEVNULL,
-                    stderr=subprocess.DEVNULL)
+    if verbose:
+        subprocess.call(["env", f"WINEPREFIX={os.getcwd()}/prefix", f"{winepath}/wine", "wineboot"])
+    else:
+        subprocess.call(["env", f"WINEPREFIX={os.getcwd()}/prefix", f"{winepath}/wine", "wineboot"],
+                        stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL)
 
     # Kill the wineserver to avoid conflicts
     print(Fore.YELLOW + "Killing the wineserver..." + Style.RESET_ALL)
-    subprocess.Popen(["env", f"WINEPREFIX={os.getcwd()}/prefix", f"{winepath+'/wineserver'}", "-k"],
-                     stdout=subprocess.DEVNULL,
-                     stderr=subprocess.DEVNULL)
+    if verbose:
+        subprocess.Popen(["env", f"WINEPREFIX={os.getcwd()}/prefix", f"{winepath + '/wineserver'}", "-k"])
+    else:
+        subprocess.Popen(["env", f"WINEPREFIX={os.getcwd()}/prefix", f"{winepath + '/wineserver'}", "-k"],
+                         stdout=subprocess.DEVNULL,
+                         stderr=subprocess.DEVNULL)
 
     print(Fore.GREEN + "Installing redist..." + Style.RESET_ALL)
-    subprocess.call(["env", f"WINEPREFIX={os.getcwd()}/prefix", "winetricks", "vcrun2015"],
-                    stdout=subprocess.DEVNULL,
-                    stderr=subprocess.DEVNULL)
+    if verbose:
+        subprocess.call(["env", f"WINEPREFIX={os.getcwd()}/prefix", "winetricks", "vcrun2015"])
+    else:
+        subprocess.call(["env", f"WINEPREFIX={os.getcwd()}/prefix", "winetricks", "vcrun2015"],
+                        stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL)
 
     print(Fore.GREEN + "Done! Please re-run the run.py script!" + Style.RESET_ALL)
     exit()
 
 
-def updateSirhurt():
+def updateSirhurt(verbose=False):
     print(Fore.YELLOW + "Updating Sirhurt..." + Style.RESET_ALL)
     config = configparser.ConfigParser()
     config.read("TuxHurtConfig.ini")
+    if verbose:
+        print(f"Current version: {config.get('DEFAULT', 'currentversion')}")
     # Get the latest DLL version
     try:
         response = requests.get("https://sirhurt.net/asshurt/update/v4/fetch_version.php")
@@ -110,8 +129,10 @@ def updateSirhurt():
         if response.status_code == 200:
             latestVersion = response.text
             print(Fore.GREEN + "Got the update URL!" + Style.RESET_ALL)
-            #os.chdir("sirhurt")
+            # os.chdir("sirhurt")
             os.system(f"wget -O 'SirHurt.dll' {latestVersion} -q  > /dev/null 2>&1")
+            if verbose:
+                print(f"Latest version: {latestVersionName.text}")
             config.set("DEFAULT", "currentversion", latestVersionName.text)
             # Save the config
             with open("TuxHurtConfig.ini", "w") as configfile:
@@ -160,14 +181,18 @@ def checkUpdates():
     # Get the latest version and compare them
     latestVersion = requests.get("https://sirhurt.net/asshurt/update/v4/fetch_sirhurt_version.php").text
     if currentVersion != latestVersion:
-        question = input(Fore.YELLOW + "A Sirhurt update is detected. Do you want to perform an update? [Y/n]: " + Style.RESET_ALL).lower()
+        question = input(
+            Fore.YELLOW + "A Sirhurt update is detected. Do you want to perform an update? [Y/n]: " + Style.RESET_ALL).lower()
         no = {'no', 'n'}
         if question in no:
-            print(Fore.YELLOW + "Skipping the update. Please note that Sirhurt may not work with your current version." + Style.RESET_ALL)
+            print(
+                Fore.YELLOW + "Skipping the update. Please note that Sirhurt may not work with your current version." + Style.RESET_ALL)
             return False
         else:
             updateSirhurt()
 
+
 if __name__ == "__main__":
-    print(Fore.RED + "This script is not meant to run from the command line! Please run 'run.py' instead." + Style.RESET_ALL)
+    print(
+        Fore.RED + "This script is not meant to run from the command line! Please run 'run.py' instead." + Style.RESET_ALL)
     exit()
