@@ -33,9 +33,7 @@ def checkTuxUpdate(manual=False, force=False):
         last_update = datetime.datetime.strptime(config.get("DEFAULT", "lastupdate")[2:], '%y-%m-%d %H:%M:%S')
     except Exception as e:
         last_update = repo.pushed_at
-        config.set("DEFAULT", "lastupdate", str(last_update))
-    with open("sirhurt/TuxHurtConfig.ini", "w") as configfile:
-        config.write(configfile)
+    config.set("DEFAULT", "lastupdate", str(repo.pushed_at))
     update = False
     if not force and repo.pushed_at > last_update:
         update = input(Fore.GREEN + "A new version of TuxHurt has been detected, would you like to update? [Y/n]: " + Style.RESET_ALL)
@@ -49,6 +47,8 @@ def checkTuxUpdate(manual=False, force=False):
     if update:
         updateScript("run")
         updateScript("setup")
+    with open("sirhurt/TuxHurtConfig.ini", "w") as configfile:
+        config.write(configfile)
     if not manual:
         os.chdir("sirhurt")
 
