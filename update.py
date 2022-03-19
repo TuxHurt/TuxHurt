@@ -3,8 +3,8 @@ import os
 import configparser
 import argparse
 import github
-from colorama import Fore, Style
 import datetime
+from colorama import Fore, Style
 
 config = configparser.ConfigParser()
 ap = argparse.ArgumentParser()
@@ -12,6 +12,7 @@ ap.add_argument("-f", "--force", required=False, help="Will force update even if
 args = vars(ap.parse_args())
 
 def updateScript(script):
+    print(f"Updating {script}.py")
     os.system(f"mv {script}.py {script}.py.backup")
     output = subprocess.run(f"wget -o {script}.py https://raw.githubusercontent.com/TuxHurt/TuxHurt/main/{script}.py".split(" "), capture_output=True)
     if output.stderr != b'SSL_INIT\n':
@@ -21,18 +22,21 @@ def updateScript(script):
         os.remove(f"{script}.py.backup")
         os.system(f"mv {script}.py.1 {script}.py")
 
-def checkTuxUpdate(force=False):
+def checkTuxUpdate(manual=False, force=False):
+    if not manual:
+        os.chdir("..")
     print(Fore.YELLOW + "Checking for TuxHurt updates..." + Style.RESET_ALL)
     g = github.Github()
     repo = g.get_repo("TuxHurt/TuxHurt")
     try:
-        last_update = datetime.strptime(config.get("DEFAULT", "lastupdate"), '%d/%m/%y %H:%M:%S')
-    except Exception:
+        last_update = datetime.datetime.strptime(config.get("DEFAULT", "lastupdate")[2:], '%y-%m-%d %H:%M:%S')
+    except Exception as e:
         last_update = repo.pushed_at
         config.set("DEFAULT", "lastupdate", str(last_update))
     update = False
     if not force and repo.pushed_at > last_update:
-        update = input(Fore.GREEN + "A new version of TuxHurt has been detected, would you like to update? [Y/n]: " + Style.RESET_ALL) not in 'no'
+        update = input(Fore.GREEN + "A new version of TuxHurt has been detected, would you like to update? [Y/n]: " + Style.RESET_ALL)
+        update = update == "" or update not in "no"
     elif repo.pushed_at == last_update:
         print(Fore.GREEN + "You're running the latest version!" + Style.RESET_ALL)
         if force:
@@ -42,6 +46,8 @@ def checkTuxUpdate(force=False):
     if update:
         updateScript("run")
         updateScript("setup")
+    if not manual:
+        os.chdir("sirhurt")
 
 if __name__ == "__main__":
-    checkTuxUpdate(args["force"])
+    checkTuxUpdate(True, args["force"])
