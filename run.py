@@ -93,7 +93,7 @@ def runSirhurt():
 
     enableChecks = False
     # Check for the attach output
-    print(Fore.GREEN + "Started listening Sirhurt events" + Style.RESET_ALL)
+    print(Fore.GREEN + "Started listening to Sirhurt events" + Style.RESET_ALL)
     while True:
         try:
             realtime_output = sirhurt_process.stdout.readline()
