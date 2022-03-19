@@ -201,7 +201,7 @@ def fixClient():
 
 
 def checkUpdates():
-    print(Fore.YELLOW + "Checking for updates..." + Style.RESET_ALL)
+    print(Fore.YELLOW + "Checking for SirHurt updates..." + Style.RESET_ALL)
     config = configparser.ConfigParser()
     config.read("TuxHurtConfig.ini")
     currentVersion = config.get("DEFAULT", "currentversion")
