@@ -3,6 +3,7 @@ import configparser
 import subprocess
 from colorama import Fore, Style
 import requests
+import json
 
 
 def getUser():
@@ -10,22 +11,40 @@ def getUser():
     user = os.getlogin()
     return user
 
+def checkGrapejuiceConfig():
+    user = getUser()
+    winepath = ""
+    grapejuiceConfig = json.loads(open(f"/home/{user}/.config/brinkervii/grapejuice/user_settings.json").read())
+
+    for x in grapejuiceConfig['wineprefixes']:
+        if x['name_on_disk'] == "player":
+            winepath = x['wine_home'] + "/bin/"
+            print(Fore.GREEN + "Found: " + Fore.CYAN + winepath + Style.RESET_ALL)
+            return winepath
+
+    while winepath == "":
+        temp_winepath = input(
+            Fore.RED + "Could not find the Wine installation directory! Please enter it manually: " + Style.RESET_ALL)
+
+        print(Fore.YELLOW + "Testing the Wine path..." + Style.RESET_ALL)
+
+        if os.path.isdir(temp_winepath) and os.path.isfile(temp_winepath + "/bin/wine") \
+                and os.path.isfile(temp_winepath + "/bin/wineserver"):
+
+            print(Fore.GREEN + "Wine path is valid! Set the Wine path as: " + temp_winepath + Style.RESET_ALL)
+            return temp_winepath + "/bin/"
+        else:
+            print(Fore.RED + "Wine path is invalid! Please enter a valid path." + Style.RESET_ALL)
+
 
 def setupEnvironment(verbose=False):
     grapejuicePrefixPath = ""
-    winepath = ""
     user = getUser()
     # I don't know if there can be multiple wine installations in this location. This may cause errors later but is
     # easy to fix. Please create an issue if this is the case.
     print(Fore.YELLOW + "Searching the wine installation directory..." + Style.RESET_ALL)
-    for file in os.listdir(f"/home/{user}/.local/share/grapejuice/user/wine-download/"):
-        if file.startswith("wine-tkg"):
-            print(Fore.GREEN + "Found: " + Fore.CYAN + file + Style.RESET_ALL)
-            winepath = f"/home/{user}/.local/share/grapejuice/user/wine-download/" + file + "/bin/"
-        else:
-            print("Wine build for Grapejuice not found! Please reinstall Grapejuice!")
-            exit()
-        break
+
+    winepath = checkGrapejuiceConfig()
 
     if os.path.exists(f"/home/{user}/.local/share/grapejuice/prefixes/player"):
         grapejuicePrefixPath = f"/home/{user}/.local/share/grapejuice/prefixes/player"
@@ -47,8 +66,22 @@ def setupEnvironment(verbose=False):
         print("There was an error with File System!")
         exit()
 
+    # Check if Sirhurt V4.zip is here
+    if not os.path.isfile("SirHurt V4.zip"):
+        print(Fore.RED + "Sirhurt not found! Due to some problems with getting links and Sirhurt's TOS, "
+                             "you need to download the zip file yourself and put it here." + Style.RESET_ALL)
+        os.system("rm -rf sirhurt")
+        exit()
+
+    print(Fore.YELLOW + "Extracting Sirhurt..." + Style.RESET_ALL)
+    # Unzip Sirhurt
+    if verbose:
+        os.system("unzip 'SirHurt V4.zip' -d sirhurt")
+    else:
+        os.system("unzip 'SirHurt V4.zip' -d sirhurt > /dev/null 2>&1")
+
     # Download the injector
-    print(Fore.GREEN + "Downloading the files..." + Style.RESET_ALL)
+    print(Fore.GREEN + "Downloading the injector..." + Style.RESET_ALL)
     os.chdir("sirhurt")
     if verbose:
         os.system("wget -O TuxHutInjector.exe https://github.com/TuxHut/TuxHut/blob/main/TuxHutInjector.exe?raw=true")
@@ -56,21 +89,6 @@ def setupEnvironment(verbose=False):
         os.system(
             "wget -O TuxHutInjector.exe https://github.com/TuxHut/TuxHut/blob/main/TuxHutInjector.exe?raw=true -q  > "
             "/dev/null 2>&1")
-
-    # Check if Sirhurt V4.zip is here
-    if not os.path.exists("../SirHurt V4.zip"):
-        if not os.path.exists("SirHurt V4.zip"):
-            print(Fore.RED + "Sirhurt not found! Due to some problems with getting links and Sirhurt's TOS, "
-                             "you need to download the zip file yourself and put it here." + Style.RESET_ALL)
-            os.chdir("..")
-            os.system("rm -rf sirhurt")
-            exit()
-
-    # Unzip Sirhurt
-    if verbose:
-        os.system("unzip '../SirHurt V4.zip' -d ../sirhurt")
-    else:
-        os.system("unzip '../SirHurt V4.zip' -d ../sirhurt > /dev/null 2>&1")
 
     # Open TuxHurtConfig.ini
     config = configparser.ConfigParser()
@@ -146,6 +164,15 @@ def updateSirhurt(verbose=False):
             Fore.RED + "Could not connect to the Sirhurt server! Please report this to TuxHurt owners." + Style.RESET_ALL)
 
 
+def updateConfig():
+    print(Fore.YELLOW + "Updating the config..." + Style.RESET_ALL)
+    os.chdir("sirhurt")
+    config = configparser.ConfigParser()
+    config.read("TuxHurtConfig.ini")
+    config.set("DEFAULT", "winepath", checkGrapejuiceConfig())
+    config.write(open("TuxHurtConfig.ini", "w"))
+    print(Fore.GREEN + "Config updated successfully!" + Style.RESET_ALL)
+
 def removeSirhurt():
     print(Fore.YELLOW + "Removing Sirhurt..." + Style.RESET_ALL)
     # Delete the "sirhurt" directory in script directory
@@ -193,6 +220,10 @@ def checkUpdates():
 
 
 if __name__ == "__main__":
+    updateConfig()
+    exit()
+
     print(
         Fore.RED + "This script is not meant to run from the command line! Please run 'run.py' instead." + Style.RESET_ALL)
+
     exit()

@@ -2,7 +2,7 @@ import os
 import subprocess
 from time import sleep
 import argparse
-from setup import setupEnvironment, updateSirhurt, fixClient, removeSirhurt, checkUpdates
+from setup import setupEnvironment, updateSirhurt, fixClient, removeSirhurt, checkUpdates, updateConfig
 from colorama import Fore, Style
 import configparser
 import time
@@ -41,6 +41,8 @@ if args["update"]:
         updateSirhurt(verbose=True)
     else:
         updateSirhurt()
+    os.chdir("..")
+    updateConfig()
     exit()
 
 
