@@ -47,6 +47,7 @@ def checkTuxUpdate(manual=False, force=False):
     if update:
         updateScript("run")
         updateScript("setup")
+        updateScript("update")
     with open("sirhurt/TuxHurtConfig.ini", "w") as configfile:
         config.write(configfile)
     if not manual:
