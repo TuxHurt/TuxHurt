@@ -7,6 +7,7 @@ from colorama import Fore, Style
 import configparser
 import time
 import asyncio
+from update import checkTuxUpdate
 
 config = configparser.ConfigParser()
 ap = argparse.ArgumentParser()
@@ -132,6 +133,8 @@ def runSirhurt():
 
 
 if __name__ == "__main__":
+    # Check for TuxHurt updates
+    checkTuxUpdate()
     # Check for updates
     checkUpdates()
     # Run Sirhurt
