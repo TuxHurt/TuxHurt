@@ -7,6 +7,7 @@ import datetime
 from colorama import Fore, Style
 
 config = configparser.ConfigParser()
+config.read("sirhurt/TuxHurtConfig.ini")
 ap = argparse.ArgumentParser()
 ap.add_argument("-f", "--force", required=False, help="Will force update even if you're running the latest version", action="store_true")
 args = vars(ap.parse_args())
@@ -33,6 +34,8 @@ def checkTuxUpdate(manual=False, force=False):
     except Exception as e:
         last_update = repo.pushed_at
         config.set("DEFAULT", "lastupdate", str(last_update))
+    with open("sirhurt/TuxHurtConfig.ini", "w") as configfile:
+        config.write(configfile)
     update = False
     if not force and repo.pushed_at > last_update:
         update = input(Fore.GREEN + "A new version of TuxHurt has been detected, would you like to update? [Y/n]: " + Style.RESET_ALL)
