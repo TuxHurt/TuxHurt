@@ -54,7 +54,8 @@
   ## Creators
   * Emilia(Python scripts, Wine research)
   * Cy#0730(Injector, Designs)
-
+  * Woffle(Updater)
+  
 <a href="https://github.com/orgs/TuxHurt/TuxHurt/main/">
     <img src="readmeassets/TuxHurtLogo.png" alt="Logo" width="160" height="140">
 </a>
