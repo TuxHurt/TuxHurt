@@ -13,7 +13,7 @@ ap.add_argument("-f", "--force", required=False, help="Will force update even if
 args = vars(ap.parse_args())
 
 def updateScript(script):
-    print(f"Updating {script}.py")
+    print(f"Updating {script}.py...", end="")
     os.system(f"mv {script}.py {script}.py.backup")
     output = subprocess.run(f"wget -o {script}.py https://raw.githubusercontent.com/TuxHurt/TuxHurt/main/{script}.py".split(" "), capture_output=True)
     if output.stderr != b'SSL_INIT\n':
@@ -22,6 +22,7 @@ def updateScript(script):
     else:
         os.remove(f"{script}.py.backup")
         os.system(f"mv {script}.py.1 {script}.py")
+        print(Fore.GREEN + "Success" + Style.RESET_ALL)
 
 def checkTuxUpdate(manual=False, force=False):
     if not manual:
@@ -37,6 +38,8 @@ def checkTuxUpdate(manual=False, force=False):
     update = False
     if not force and repo.pushed_at > last_update:
         update = input(Fore.GREEN + "A new version of TuxHurt has been detected, would you like to update? [Y/n]: " + Style.RESET_ALL)
+        if update in "no" and update != "":
+            print(Fore.YELLOW + "Skipping update..." + Style.RESET_ALL)
         update = update == "" or update not in "no"
     elif repo.pushed_at == last_update:
         print(Fore.GREEN + "You're running the latest version!" + Style.RESET_ALL)
