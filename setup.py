@@ -1,4 +1,5 @@
 import os
+import pwd
 import configparser
 import subprocess
 from colorama import Fore, Style
@@ -8,7 +9,7 @@ import json
 
 def getUser():
     # Get the user name of system
-    user = os.getlogin()
+    user = pwd.getpwuid(os.geteuid())[0]
     return user
 
 def checkGrapejuiceConfig():
