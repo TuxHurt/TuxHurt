@@ -138,9 +138,9 @@ def runSirhurt():
 
 
 if __name__ == "__main__":
-    # Check for TuxHurt updates
-    checkTuxUpdate()
     # Check for updates
     checkUpdates()
+    # Check for TuxHurt updates
+    checkTuxUpdate()
     # Run Sirhurt
     runSirhurt()
