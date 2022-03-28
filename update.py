@@ -41,7 +41,6 @@ def checkTuxUpdate(manual=False, force=False):
         last_update = repo.pushed_at
     config.set("DEFAULT", "lastupdate", str(repo.pushed_at))
     update = False
-    last_update = datetime.datetime(20, 10, 10)
     if not force and repo.pushed_at > last_update:
         print(Fore.GREEN + "A new version of TuxHurt has been detected, would you like to update? [Y/n]: " + Style.RESET_ALL, end="", flush=True)
         update = getch.getche().lower()
