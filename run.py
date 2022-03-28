@@ -14,8 +14,8 @@ ap = argparse.ArgumentParser()
 ap.add_argument("-u", "--update", required=False, help="Update Sirhurt's DLL", action="store_true")
 ap.add_argument("-c", "--clear", required=False, help="Remove Sirhurt", action="store_true")
 ap.add_argument("-f", "--fixclient", required=False, help="Fix Unexpected Client Error", action="store_true")
-ap.add_argument("-v", "--verbose", required=False, help="Spits out everything in an annoying way like Asia in DxD",
-                action="store_true")
+ap.add_argument("-v", "--verbose", required=False, help="Spits out everything in an annoying way like Asia in DxD", action="store_true")
+ap.add_argument("-r", "--repository", nargs=1, required=False, help="Changes the repository where updates are pulled from")
 
 args = vars(ap.parse_args())
 verbose = args["verbose"]
@@ -36,6 +36,11 @@ except:
         setupEnvironment(verbose=True)
     else:
         setupEnvironment()
+
+if args["repository"]:
+    config.set("DEFAULT", "repo", args["repository"][0])
+    with open("TuxHurtConfig.ini", "w") as f:
+        config.write(f)
 
 if args["update"]:
     if verbose:
@@ -133,9 +138,9 @@ def runSirhurt():
 
 
 if __name__ == "__main__":
-    # Check for TuxHurt updates
-    checkTuxUpdate()
     # Check for updates
     checkUpdates()
+    # Check for TuxHurt updates
+    checkTuxUpdate()
     # Run Sirhurt
     runSirhurt()

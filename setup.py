@@ -4,11 +4,14 @@ import subprocess
 from colorama import Fore, Style
 import requests
 import json
-
+import getch
 
 def getUser():
     # Get the user name of system
-    user = os.getlogin()
+    try:
+        user = os.getlogin()
+    except:
+        user = pwd.getpwuid(os.geteuid())[0]
     return user
 
 def checkGrapejuiceConfig():
@@ -208,13 +211,10 @@ def checkUpdates():
     # Get the latest version and compare them
     latestVersion = requests.get("https://sirhurt.net/asshurt/update/v4/fetch_sirhurt_version.php").text
     if currentVersion != latestVersion:
-        question = input(
-            Fore.YELLOW + "A Sirhurt update is detected. Do you want to perform an update? [Y/n]: " + Style.RESET_ALL).lower()
-        no = {'no', 'n'}
-        if question in no:
-            print(
-                Fore.YELLOW + "Skipping the update. Please note that Sirhurt may not work with your current version." + Style.RESET_ALL)
-            return False
+        print(Fore.YELLOW + "A Sirhurt update is detected. Do you want to perform an update? [Y/n]: " + Style.RESET_ALL, end="", flush=True)
+        update = getch.getche().lower()
+        if update == "n":
+            print(Fore.YELLOW + "\nSkipping the update. Please note that Sirhurt may not work with your current version." + Style.RESET_ALL)
         else:
             updateSirhurt()
 
