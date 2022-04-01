@@ -26,8 +26,6 @@ def checkPackages():
         print(Fore.RED + "You need all the above packages for TuxHurt to run, please install them using your os' package manager." + Style.RESET_ALL)
         quit()
 
-checkPackages()
-
 config = configparser.ConfigParser()
 ap = argparse.ArgumentParser()
 ap.add_argument("-u", "--update", required=False, help="Update Sirhurt's DLL", action="store_true")
@@ -50,6 +48,7 @@ try:
     os.chdir("sirhurt")
     config.read("TuxHurtConfig.ini")
 except:
+    checkPackages()
     print(Fore.RED + "SirHurt not found! Getting into configuration mode..." + Style.RESET_ALL)
     if verbose:
         setupEnvironment(verbose=True)
