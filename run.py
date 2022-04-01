@@ -9,6 +9,23 @@ import time
 import asyncio
 from update import checkTuxUpdate
 
+def checkPackages():
+    print(Fore.YELLOW + "Checking required packages..." + Style.RESET_ALL)
+    required_packages = {"wine":False, "winetricks":False, "wget":False, "unzip":False}
+    for i in required_packages:
+        o = subprocess.run(i + " --version", shell=True, capture_output=True)
+        required_packages[i] = str(o.returncode) in "10"
+    need_packages = False
+    for i in required_packages:
+        if not required_packages[i]:
+            need_packages = True
+            print(Fore.RED + f"Package '{i}' [NOT INSTALLED]", Style.RESET_ALL)
+        else:
+            print(Fore.GREEN + f"Package '{i}' [INSTALLED]", Style.RESET_ALL)
+    if need_packages:
+        print(Fore.RED + "You need all the above packages for TuxHurt to run, please install them using your os' package manager." + Style.RESET_ALL)
+        quit()
+
 config = configparser.ConfigParser()
 ap = argparse.ArgumentParser()
 ap.add_argument("-u", "--update", required=False, help="Update Sirhurt's DLL", action="store_true")
@@ -31,6 +48,7 @@ try:
     os.chdir("sirhurt")
     config.read("TuxHurtConfig.ini")
 except:
+    checkPackages()
     print(Fore.RED + "SirHurt not found! Getting into configuration mode..." + Style.RESET_ALL)
     if verbose:
         setupEnvironment(verbose=True)
@@ -136,8 +154,9 @@ def runSirhurt():
             print(Fore.GREEN + "Wineserver killed successfully! Thank you for using TuxHurt." + Style.RESET_ALL)
             exit()
 
-
 if __name__ == "__main__":
+    # Check for required packages
+    checkPackages()
     # Check for updates
     checkUpdates()
     # Check for TuxHurt updates
