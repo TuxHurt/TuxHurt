@@ -5,6 +5,7 @@ from colorama import Fore, Style
 import requests
 import json
 import getch
+import pwd
 
 def getUser():
     # Get the user name of system
@@ -14,8 +15,30 @@ def getUser():
         user = pwd.getpwuid(os.geteuid())[0]
     return user
 
+def killWineServer(verbose=False):
+    config = configparser.ConfigParser()
+    os.chdir("sirhurt")
+    config.read("TuxHurtConfig.ini")
+    winePath = config.get("DEFAULT", "winepath")
+    sirhurtPrefixPath = config.get("DEFAULT", "sirhurtpath") + "/prefix"
+    grapejuicePrefixPath = config.get("DEFAULT", "grapejuiceprefix")
+    sirhurtPath = config.get("DEFAULT", "sirhurtpath")
+    print(Fore.YELLOW + "Killing the wineserver..." + Style.RESET_ALL)
+    if verbose:
+        subprocess.Popen(["env", f"WINEPREFIX={os.getcwd()}/prefix", f"{winePath + '/wineserver'}", "-k"])
+        subprocess.Popen(["env", f"WINEPREFIX={grapejuicePrefixPath}", f"{winePath + '/wineserver'}", "-k"])
+
+    else:
+        subprocess.Popen(["env", f"WINEPREFIX={os.getcwd()}/prefix", f"{winePath + '/wineserver'}", "-k"],
+                         stdout=subprocess.DEVNULL,
+                         stderr=subprocess.DEVNULL)
+        subprocess.Popen(["env", f"WINEPREFIX={grapejuicePrefixPath}", f"{winePath + '/wineserver'}", "-k"],
+                         stdout=subprocess.DEVNULL,
+                         stderr=subprocess.DEVNULL)
+
 def checkGrapejuiceConfig():
     user = getUser()
+    global winepath
     winepath = ""
     grapejuiceConfig = json.loads(open(f"/home/{user}/.config/brinkervii/grapejuice/user_settings.json").read())
 
@@ -166,6 +189,26 @@ def updateSirhurt(verbose=False):
         print(
             Fore.RED + "Could not connect to the Sirhurt server! Please report this to TuxHurt owners." + Style.RESET_ALL)
 
+
+def updateSirhurtWithBootstrapper(verbose=False):
+    print(Fore.YELLOW + "Updating Sirhurt using Bootstrapper..." + Style.RESET_ALL)
+    config = configparser.ConfigParser()
+    config.read("TuxHurtConfig.ini")
+    if verbose:
+        print(f"Current version: {config.get('DEFAULT', 'currentversion')}")
+    try:
+        winePath = config.get("DEFAULT", "winepath")
+        sirhurtPrefixPath = config.get("DEFAULT", "sirhurtpath")
+        if verbose:
+            subprocess.call(["env", f"WINEPREFIX={sirhurtPrefixPath}", f"{winePath + '/wine'}", "Sirhurt V4 Bootstrapper.exe"])
+        else:
+            subprocess.call(["env", f"WINEPREFIX={sirhurtPrefixPath}", f"{winePath + '/wine'}", "Sirhurt V4 Bootstrapper.exe"],
+            stdout = subprocess.DEVNULL,
+            stderr = subprocess.DEVNULL)
+        print(Fore.GREEN + "Successfully ran Bootstrapper! Please re-run the script." + Style.RESET_ALL)
+
+    except:
+        print(Fore.RED + "Could not run the Bootstrapper. Please report this incident to TuxHurt owners." + Style.RESET_ALL)
 
 def updateConfig():
     print(Fore.YELLOW + "Updating the config..." + Style.RESET_ALL)

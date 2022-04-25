@@ -11,7 +11,8 @@
   * [Installation](#installation)
   * [Usage](#usage)
   * [Injector](#injector)
-  * [How to run SirHurt on GNU/Linux without TuxHurt](#SirHurtWine)
+  * [How to run SirHurt on GNU/Linux without TuxHurt](#how-to-run-sirhurt-on-gnulinux-without-tuxhurt)
+  * [Security](#security)
   * [License](#license)
   * [Questions](#questions)
   * [Creators](#creators)
@@ -33,17 +34,27 @@
 
   ## Usage 
   You can simply use the `run.py` to run Sirhurt. It will automatically check updates for you too.<br/>
+  `python3 run.py -h` to show help.<br/>
   `python3 run.py -u` to force update.<br/>
+  `python3 run.py -uu` to update using Sirhurt Bootstrapper(Experimental).<br/>
   `python3 run.py -c` to remove Sirhurt. This may be a bit buggy so if it breaks, just delete the `sirhurt` directory by hand.<br/>
   `python3 run.py -f` to fix Unexpected Client Behavior in Roblox.<br/>
+  `python3 run.py -k` to kill Roblox and Sirhurt.<br/>
+  `python3 run.py -v` for verbose output. This is helpful when asking for help or diagnosing issues.<br/>
+  `python3 run.py -r REPOSITORY` for changing the repository the script will update from. This is useful for forks.<br/>
+  `python3 run.py --credits` for showing the credits.<br/>
+  `python3 run.py --license` for showing the license of TuxHurt.<br/>
   
   ## Injector 
   TuxHurt uses an Injector called TuxHut that is made by the Owners of TuxHurt. It is a big part of TuxHurt's 0 effort goal.<br/>
   Read more about the Injector [here](https://github.com/TuxHurt/TuxHut)
   
-  ## SirHurtWine
-  If you would like to run SirHurt on GNU/Linux without TuxHurt, read a guide created by use [here](https://hentai.dsf001.site/notes/sirhurt.html).<br/>
+  ## How to run SirHurt on GNU/Linux without TuxHurt
+  If you would like to run SirHurt on GNU/Linux without TuxHurt, read a guide created by us [here](https://hentai.dsf001.site/notes/sirhurt.html).<br/>
   It's recommended to run SirHurt on GNU/Linux with TuxHurt.
+
+  ## Security
+  Cy found out that Roblox has some checks for Wine and GNU/Linux specifically. For this reason, we coded it in a way that it does not mess with Roblox and its Wine prefix. TuxHurt does not install itself to any directory except the project root and uninstalling the software is done by just deleting a directory.
 
   ## License 
   This project is licensed under GNU GPLv3
@@ -52,9 +63,9 @@
   If you have any questions about this project, please contact us directly on [Discord](https://discord.gg/b8PGgMHpYX).
 
   ## Creators
-  * Emilia(Python scripts, Wine research)
-  * Cy#0730(Injector, Designs)
-  * Millie "woffle#1337"(Updater)
+  * Emilia "dsf001#1337" (Python scripts, Wine research)
+  * Cy#0730 (Injector, Designs)
+  * Millie "Millie<3#1337" (Updater)
   
 <a href="https://github.com/orgs/TuxHurt/TuxHurt/main/">
     <img src="readmeassets/TuxHurtLogo.png" alt="Logo" width="160" height="140">
