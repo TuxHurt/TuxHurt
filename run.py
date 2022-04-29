@@ -47,6 +47,7 @@ ap.add_argument("--license", required=False, help="Show the license for TuxHurt"
 
 args = vars(ap.parse_args())
 verbose = args["verbose"]
+print(Fore.YELLOW + "Using verbose" + Style.RESET_ALL)
 
 if args['credits']:
     print(f"{Fore.YELLOW}Tux{Fore.CYAN}Hurt{Fore.GREEN} is brought to you by:{Style.RESET_ALL}\n")

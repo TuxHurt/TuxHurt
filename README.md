@@ -31,6 +31,7 @@
   Install the requirements with `pip3 install -r requirements.txt`<br/>
   Download Sirhurt from the website and put the .zip archive next to run and setup scripts(The archive must be named "SirHurt V4.zip").<br/>
   Run the run.py script. This may take a while for the first time.<br/>
+  Note: The "SirHurt V4.zip" must look like [this](readmeassets/sirhurtzip.png). To get this zip file, use the mirror link from SirHurt's website(onedrive). <br/>
 
   ## Usage 
   You can simply use the `run.py` to run Sirhurt. It will automatically check updates for you too.<br/>
