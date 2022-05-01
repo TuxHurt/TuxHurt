@@ -4,7 +4,18 @@
   [![Discord](https://img.shields.io/badge/Discord-TuxHurt-blue?style=flat-square)](https://discord.gg/b8PGgMHpYX)
   
   ## Description 
-  TuxHurt is the project that aims to run Sirhurt on GNU/Linux with 0 effort.
+  TuxHurt is the project that aims to run Sirhurt on GNU/Linux with 0 effort.<br/>
+  TuxHurt-rw is a sub-project of TuxHurt which aims to keep the backend of TuxHurt tidy.<br/>
+  It follows most PEP8 rules, and the files have been compressed into one `run.py` file.<br/>
+  TuxHurt-rw also got rid of all bad practices used in the original source code.<br/>
+  This includes:
+  * Not passing a global into functions
+  * Using the `global` keyword
+  * Code in the global scope
+  * Unused imports
+  * camelCase
+  * Lack of security checks
+  * Made everything more pythonic (terenary if's, better try-except blocks, etc)
 
   ## Table of Contents
   * [Requirements](#requirements)
@@ -45,6 +56,7 @@
   `python3 run.py -r REPOSITORY` for changing the repository the script will update from. This is useful for forks.<br/>
   `python3 run.py --credits` for showing the credits.<br/>
   `python3 run.py --license` for showing the license of TuxHurt.<br/>
+  ! NOTE: The default repository is set to `TuxHurt/TuxHurt`, if you're running code from the `WoffleTbh/TuxHurt-rw` repository, you must run with the `-r WoffleTbh/TuxHurt-rw` flag !
   
   ## Injector 
   TuxHurt uses an Injector called TuxHut that is made by the Owners of TuxHurt. It is a big part of TuxHurt's 0 effort goal.<br/>
@@ -66,7 +78,7 @@
   ## Creators
   * Emilia "dsf001#1337" (Python scripts, Wine research)
   * Cy#0730 (Injector, Designs)
-  * Millie "Millie<3#1337" (Updater)
+  * Millie "woffle#1337" (Updater, Package checker, Rewrite)
   
 <a href="https://github.com/orgs/TuxHurt/TuxHurt/main/">
     <img src="readmeassets/TuxHurtLogo.png" alt="Logo" width="160" height="140">
