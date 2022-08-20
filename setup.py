@@ -256,6 +256,7 @@ def checkUpdates():
     if currentVersion != latestVersion:
         print(Fore.YELLOW + "A Sirhurt update is detected. Do you want to perform an update? [Y/n]: " + Style.RESET_ALL, end="", flush=True)
         update = getch.getche().lower()
+        if update != "\n":print("\n")
         if update == "n":
             print(Fore.YELLOW + "\nSkipping the update. Please note that Sirhurt may not work with your current version." + Style.RESET_ALL)
         else:
