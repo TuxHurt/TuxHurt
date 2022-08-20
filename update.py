@@ -43,7 +43,6 @@ def checkTuxUpdate(manual=False, force=False):
     if not force and repo.pushed_at > last_update:
         print(Fore.GREEN + "A new version of TuxHurt has been detected, would you like to update? [Y/n]: " + Style.RESET_ALL, end="", flush=True)
         update = getch.getche().lower()
-        if update != "\n":print("\n")
         if update == "n":
             print(Fore.YELLOW + "\nSkipping update..." + Style.RESET_ALL)
         update = update == "" or update != "n"
